@@ -26,3 +26,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it.
 - `npm run start` — serve the production build
 - `npm run lint` — lint the project
 - `npm run test` — run the test suite (Vitest)
+
+## Deployment
+
+Configured for [Render](https://render.com) via `render.yaml` (Node web service, `npm run build` / `npm run start`).
