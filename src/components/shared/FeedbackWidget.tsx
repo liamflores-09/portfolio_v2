@@ -15,7 +15,13 @@ type Status = "idle" | "sending" | "sent" | "error";
 const FIELD_CLASSES =
   "w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-sm outline-none transition-colors focus:border-accent";
 
-export function FeedbackWidget({ iconClassName }: { iconClassName: string }) {
+export function FeedbackWidget({
+  iconClassName,
+  variant = "dock",
+}: {
+  iconClassName: string;
+  variant?: "dock" | "plain";
+}) {
   const [status, setStatus] = useState<Status>("idle");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -45,18 +51,27 @@ export function FeedbackWidget({ iconClassName }: { iconClassName: string }) {
         if (!open) setStatus("idle");
       }}
     >
-      <DockIcon>
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <DialogTrigger aria-label="Send feedback" className="flex h-full w-full items-center justify-center text-foreground" />
-            }
-          >
-            <FaCommentDots className={iconClassName} />
-          </TooltipTrigger>
-          <TooltipContent side="top">Feedback</TooltipContent>
-        </Tooltip>
-      </DockIcon>
+      {variant === "dock" ? (
+        <DockIcon>
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <DialogTrigger aria-label="Send feedback" className="flex h-full w-full items-center justify-center text-foreground" />
+              }
+            >
+              <FaCommentDots className={iconClassName} />
+            </TooltipTrigger>
+            <TooltipContent side="top">Feedback</TooltipContent>
+          </Tooltip>
+        </DockIcon>
+      ) : (
+        <DialogTrigger
+          aria-label="Send feedback"
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-foreground"
+        >
+          <FaCommentDots className={iconClassName} />
+        </DialogTrigger>
+      )}
       <DialogContent className="flex flex-col gap-0 overflow-hidden p-0 sm:max-w-md" showCloseButton>
         <Confetti ref={confettiRef} manualstart className="pointer-events-none absolute inset-0 z-50 h-full w-full" />
         <div className="relative overflow-hidden px-6 pb-5 pt-8">

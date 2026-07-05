@@ -19,16 +19,20 @@ import { Dock, DockIcon } from "@/components/ui/dock";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { FeedbackWidget } from "@/components/shared/FeedbackWidget";
+import { MobileMenu } from "./MobileMenu";
 import { useTheme } from "./ThemeProvider";
+import type { Theme } from "@/lib/theme";
 
-interface DockLink {
+export interface DockLink {
   href: string;
   label: string;
   icon: LucideIcon;
 }
 
-const DOCK_LINKS: DockLink[] = [
-  { href: "/#hero", label: "Home", icon: Home },
+const HOME_LINK: DockLink = { href: "/#hero", label: "Home", icon: Home };
+const CONTACT_LINK: DockLink = { href: "/#contact", label: "Contact", icon: Mail };
+
+const MENU_LINKS: DockLink[] = [
   { href: "/#about", label: "About Me", icon: User },
   { href: "/#experience", label: "Experience", icon: Briefcase },
   { href: "/#testimonials", label: "Testimonials", icon: MessageSquareQuote },
@@ -37,8 +41,12 @@ const DOCK_LINKS: DockLink[] = [
   { href: "/#projects", label: "Projects", icon: LayoutGrid },
   { href: "/#creative", label: "Creative Work", icon: Palette },
   { href: "/#hobbies", label: "Hobbies", icon: Gamepad2 },
-  { href: "/#contact", label: "Contact", icon: Mail },
 ];
+
+const DOCK_LINKS: DockLink[] = [HOME_LINK, ...MENU_LINKS, CONTACT_LINK];
+
+const MOBILE_TAP_TARGET =
+  "flex min-h-11 min-w-11 items-center justify-center rounded-full text-foreground";
 
 function useIsCompactDock() {
   const [isCompact, setIsCompact] = useState(false);
@@ -54,19 +62,47 @@ function useIsCompactDock() {
   return isCompact;
 }
 
+function MobileDockBar({ theme, toggleTheme }: { theme: Theme; toggleTheme: () => void }) {
+  return (
+    <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center px-4">
+      <div className="flex items-center gap-1 rounded-2xl border border-border bg-surface/80 p-1.5 backdrop-blur-md">
+        <Link href={HOME_LINK.href} aria-label={HOME_LINK.label} className={MOBILE_TAP_TARGET}>
+          <HOME_LINK.icon className="h-5 w-5" />
+        </Link>
+        <MobileMenu links={MENU_LINKS} />
+        <FeedbackWidget variant="plain" iconClassName="h-5 w-5" />
+        <Link href={CONTACT_LINK.href} aria-label={CONTACT_LINK.label} className={MOBILE_TAP_TARGET}>
+          <CONTACT_LINK.icon className="h-5 w-5" />
+        </Link>
+        <AnimatedThemeToggler
+          theme={theme}
+          onThemeChange={() => toggleTheme()}
+          aria-label="Toggle theme"
+          className={`${MOBILE_TAP_TARGET} [&_svg]:h-5 [&_svg]:w-5`}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function SiteDock() {
   const { theme, toggleTheme } = useTheme();
   const isCompact = useIsCompactDock();
-  const iconClass = isCompact ? "h-3.5 w-3.5" : "h-6 w-6";
-  const svgIconClass = isCompact ? "[&_svg]:h-3.5 [&_svg]:w-3.5" : "[&_svg]:h-6 [&_svg]:w-6";
+
+  if (isCompact) {
+    return <MobileDockBar theme={theme} toggleTheme={toggleTheme} />;
+  }
+
+  const iconClass = "h-6 w-6";
+  const svgIconClass = "[&_svg]:h-6 [&_svg]:w-6";
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center overflow-x-auto px-4">
       <Dock
-        iconSize={isCompact ? 28 : 40}
-        iconMagnification={isCompact ? 36 : 60}
-        iconDistance={isCompact ? 60 : 140}
-        className={`pointer-events-auto mt-0 border-border bg-surface/80 ${isCompact ? "gap-1 p-1.5" : "gap-2"}`}
+        iconSize={40}
+        iconMagnification={60}
+        iconDistance={140}
+        className="pointer-events-auto mt-0 gap-2 border-border bg-surface/80"
       >
         {DOCK_LINKS.map((link) => (
           <DockIcon key={link.href}>
