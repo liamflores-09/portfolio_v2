@@ -1,7 +1,8 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { FaCommentDots, FaPaperPlane, FaRegStar, FaSpinner, FaStar } from "react-icons/fa6";
+import { MessageCircleMore } from "lucide-react";
+import { FaPaperPlane, FaRegStar, FaSpinner, FaStar } from "react-icons/fa6";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DockIcon } from "@/components/ui/dock";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -59,7 +60,7 @@ export function FeedbackWidget({
                 <DialogTrigger aria-label="Send feedback" className="flex h-full w-full items-center justify-center text-foreground" />
               }
             >
-              <FaCommentDots className={iconClassName} />
+              <MessageCircleMore className={iconClassName} />
             </TooltipTrigger>
             <TooltipContent side="top">Feedback</TooltipContent>
           </Tooltip>
@@ -69,7 +70,7 @@ export function FeedbackWidget({
           aria-label="Send feedback"
           className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-foreground"
         >
-          <FaCommentDots className={iconClassName} />
+          <MessageCircleMore className={iconClassName} />
         </DialogTrigger>
       )}
       <DialogContent className="flex flex-col gap-0 overflow-hidden p-0 sm:max-w-md" showCloseButton>

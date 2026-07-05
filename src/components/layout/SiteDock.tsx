@@ -64,8 +64,8 @@ function useIsCompactDock() {
 
 function MobileDockBar({ theme, toggleTheme }: { theme: Theme; toggleTheme: () => void }) {
   return (
-    <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center px-4">
-      <div className="flex items-center gap-1 rounded-2xl border border-border bg-surface/80 p-1.5 backdrop-blur-md">
+    <div className="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4">
+      <div className="pointer-events-auto flex items-center gap-1 rounded-2xl border border-border bg-surface/80 p-1.5 backdrop-blur-md">
         <Link href={HOME_LINK.href} aria-label={HOME_LINK.label} className={MOBILE_TAP_TARGET}>
           <HOME_LINK.icon className="h-5 w-5" />
         </Link>
