@@ -8,10 +8,25 @@ import { ExternalLinkConfirm } from "@/components/shared/ExternalLinkConfirm";
 import { BackToTop } from "@/components/shared/BackToTop";
 import "./globals.css";
 
+const title = "Liam Flores — Portfolio";
+const description =
+  "Portfolio of Liam Jed M. Flores - IT Specialist & Systems Engineer specializing in Laravel, PHP, JavaScript, and web development.";
+
 export const metadata: Metadata = {
-  title: "Liam Flores — Portfolio",
-  description:
-    "Portfolio of Liam Jed M. Flores - IT Specialist & Systems Engineer specializing in Laravel, PHP, JavaScript, and web development.",
+  metadataBase: new URL("https://liamflores.onrender.com"),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 const themeInitScript = `
