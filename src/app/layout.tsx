@@ -27,11 +27,11 @@ const themeInitScript = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`overflow-x-hidden ${sunghyunSans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={sunghyunSans.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="overflow-x-hidden bg-background text-foreground font-sans antialiased">
+      <body className="bg-background text-foreground font-sans antialiased">
         <ThemeProvider>
           <TooltipProvider>
             {children}
