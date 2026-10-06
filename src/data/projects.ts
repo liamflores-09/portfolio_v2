@@ -20,21 +20,19 @@ export const projects: Project[] = [
     title: "Portfolio Website",
     category: "Personal Portfolio",
     description:
-      "Personal portfolio built using Laravel + Bootstrap. Fully responsive with dark mode, interactive elements, and smooth animations.",
+      "This portfolio, built with Next.js and Tailwind CSS. It brings together project case studies, creative work, and a contact form in a responsive layout.",
     image: "/images/portfoliobg.png",
-    tags: ["Laravel", "Bootstrap", "MySQL", "JavaScript", "HTML", "CSS"],
-    links: [{ label: "GitHub", href: "https://github.com/liamflores-09", external: true }],
+    tags: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+    links: [{ label: "Source Code", href: "https://github.com/liamflores-09/portfolio_v2", external: true }],
   },
   {
-    title: "Applicant Tracking System",
+    title: "RecruitMint Applicant Tracking System",
     category: "Capstone Project",
     description:
-      "Built using Laravel to streamline the recruitment process featuring job posting, application management, and candidate tracking.",
+      "Led a four-person team to build RecruitMint, a Laravel applicant tracking system for job postings, applicant workflows, resume parsing, and hiring reports. The capstone received a 4.73/5 satisfaction rating.",
     image: "/images/capstonebg.png",
-    links: [
-      { label: "View Details", href: "/projects/ats" },
-      { label: "GitHub", href: "https://github.com/liamflores-09", external: true },
-    ],
+    tags: ["Laravel", "PHP", "PostgreSQL", "Bootstrap", "Chart.js"],
+    links: [{ label: "View Case Study", href: "/projects/ats" }],
   },
   {
     title: "Yeyeniya's Pilot Service",
@@ -43,10 +41,7 @@ export const projects: Project[] = [
     image: "/images/yeyeniya.png",
     tags: ["Laravel", "Bootstrap", "MySQL", "JavaScript"],
     notice: "Hosted on Vercel Free Tier",
-    links: [
-      { label: "Live Demo", href: "https://yeyeniya.vercel.app/", external: true },
-      { label: "GitHub", href: "https://github.com/liamflores-09", external: true },
-    ],
+    links: [{ label: "Live Demo", href: "https://yeyeniya.vercel.app/", external: true }],
   },
   {
     title: "Personal Budget Tracker (MIK!)",
