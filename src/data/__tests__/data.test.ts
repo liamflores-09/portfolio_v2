@@ -20,9 +20,14 @@ describe("homepage data", () => {
     expect(hero.meta).toHaveLength(3);
   });
 
-  it("stats has exactly 4 entries with positive values", () => {
+  it("stats has four concise portfolio highlights", () => {
     expect(stats).toHaveLength(4);
-    stats.forEach((s) => expect(s.value).toBeGreaterThan(0));
+    expect(stats.map((s) => s.label)).toEqual([
+      "BSIT Graduate",
+      "Projects",
+      "Tools & Technologies",
+      "Internship",
+    ]);
   });
 
   it("experience has 4 roles, all with role/company/period", () => {
@@ -34,9 +39,10 @@ describe("homepage data", () => {
     });
   });
 
-  it("testimonials has exactly 8 quotes", () => {
-    expect(testimonials).toHaveLength(8);
+  it("testimonials includes professional recommendations and client feedback", () => {
+    expect(testimonials).toHaveLength(6);
     testimonials.forEach((t) => expect(t.quote.length).toBeGreaterThan(0));
+    expect(testimonials.every((t) => t.role !== "Friend")).toBe(true);
   });
 
   it("techStack has 3 categories covering 16 tools", () => {
