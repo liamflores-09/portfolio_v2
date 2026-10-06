@@ -2,6 +2,7 @@ export interface ExperienceItem {
   role: string;
   company: string;
   period: string;
+  description?: string;
   current?: boolean;
   logos?: string[];
 }
@@ -18,12 +19,14 @@ export const experience: ExperienceItem[] = [
     role: "Web Developer",
     company: "Highly Succeed Inc",
     period: "2025",
+    description: "Built a pre-registration system for DILG and coordinated with teammates on implementation.",
     logos: ["/images/companies/hsi.png"],
   },
   {
     role: "Graphics Designer",
     company: "Highly Succeed Inc / Unleash PH",
     period: "2025",
+    description: "Created UI designs, brand identity, and publication and marketing materials.",
     logos: ["/images/companies/hsi.png", "/images/companies/unleash.png"],
   },
   {
