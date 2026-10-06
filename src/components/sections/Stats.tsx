@@ -7,7 +7,7 @@ export function Stats() {
       {stats.map((stat) => (
         <div key={stat.label} className="flex flex-1 flex-col items-center gap-2 px-2 text-center sm:px-4">
           <div className="flex items-baseline gap-0.5 text-3xl font-extrabold sm:text-4xl">
-            <NumberTicker value={stat.value} className="text-foreground" />
+            {typeof stat.value === "number" ? <NumberTicker value={stat.value} className="text-foreground" /> : <span className="text-foreground">{stat.value}</span>}
             {stat.suffix && <span>{stat.suffix}</span>}
           </div>
           <span className="text-xs font-medium tracking-wide text-muted uppercase">{stat.label}</span>
