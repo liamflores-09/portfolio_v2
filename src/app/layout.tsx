@@ -6,14 +6,15 @@ import { Footer } from "@/components/layout/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ExternalLinkConfirm } from "@/components/shared/ExternalLinkConfirm";
 import { BackToTop } from "@/components/shared/BackToTop";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const title = "Liam Flores — Portfolio";
 const description =
-  "Portfolio of Liam Jed M. Flores - IT Specialist & Systems Engineer specializing in Laravel, PHP, JavaScript, and web development.";
+  "Liam Flores is a Magna Cum Laude Information Technology graduate from TIP Manila, building responsive web applications with Laravel, PHP, and JavaScript.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://liamflores.onrender.com"),
+  metadataBase: new URL(SITE_URL),
   title,
   description,
   openGraph: {

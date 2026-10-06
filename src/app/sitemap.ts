@@ -1,11 +1,10 @@
 import type { MetadataRoute } from "next";
-
-const BASE_URL = "https://liamflores.onrender.com";
+import { SITE_URL } from "@/lib/site";
 
 const ROUTES = ["/", "/projects", "/projects/ats", "/projects/budget-tracker", "/tech-stack", "/testimonials"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map((route) => ({
-    url: `${BASE_URL}${route}`,
+    url: `${SITE_URL}${route}`,
   }));
 }
