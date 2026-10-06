@@ -25,17 +25,6 @@ export const testimonials: Testimonial[] = [
     role: "Client",
   },
   {
-    quote: "Nayswan, solid ka talaga bro!",
-    name: "Chrisanthony Bigas",
-    role: "Friend",
-  },
-  {
-    quote: "Lupit mo talaga boss tammy!",
-    name: "Jade Quiding",
-    role: "Friend",
-    tooltip: { word: "tammy", note: "my nickname" },
-  },
-  {
     quote: "Helped improve our system a lot. Smooth and reliable work.",
     name: "Jodi Nathalee",
     role: "Client",
