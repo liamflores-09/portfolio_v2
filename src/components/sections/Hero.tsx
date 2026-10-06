@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { FaArrowRight, FaArrowUpRightFromSquare, FaEnvelope } from "react-icons/fa6";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { ResumeButton } from "@/components/sections/ResumeButton";
 import { ShareButton } from "@/components/sections/ShareButton";
@@ -34,6 +34,14 @@ export function Hero() {
         <div className="flex flex-col items-center sm:items-start">
           <h1 className="mb-3 text-5xl font-extrabold tracking-tight md:text-6xl">{hero.name} 👋</h1>
           <p className="mb-6 max-w-md text-lg text-muted-foreground">{hero.subtitle}</p>
+          <div className="mb-6 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+            <a href="#projects" className="inline-flex items-center gap-2 rounded-xl bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition-transform hover:-translate-y-0.5">
+              Explore my work <FaArrowRight className="h-3 w-3" />
+            </a>
+            <a href="#contact" className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-foreground hover:text-background">
+              Contact me <FaEnvelope className="h-3 w-3" />
+            </a>
+          </div>
           <div className="mb-6 flex flex-wrap items-center justify-center gap-2 text-sm text-muted sm:justify-start">
             {hero.meta.map((item, index) => (
               <span key={item.label} className="flex items-center gap-2">
@@ -45,15 +53,8 @@ export function Hero() {
           </div>
           <div className="mb-6 flex flex-wrap items-center justify-center gap-4 text-sm font-medium sm:justify-start">
             {hero.socials.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target={social.href.startsWith("http") ? "_blank" : undefined}
-                rel={social.href.startsWith("http") ? "noreferrer" : undefined}
-                className="flex items-center gap-1.5 text-foreground lowercase transition-colors hover:text-accent"
-              >
-                {social.label}
-                <FaArrowUpRightFromSquare className="h-3 w-3" />
+              <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel={social.href.startsWith("http") ? "noreferrer" : undefined} className="flex items-center gap-1.5 text-foreground lowercase transition-colors hover:text-accent">
+                {social.label}<FaArrowUpRightFromSquare className="h-3 w-3" />
               </a>
             ))}
           </div>
