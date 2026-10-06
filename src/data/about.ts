@@ -1,3 +1,3 @@
 export const about = {
-  text: "I am Liam Flores, a Magna Cum Laude graduate with a strong foundation in web development, systems analysis, and software design. Previously interned at Highly Succeed Inc. working on government systems and UI/UX tasks. Currently working as an E-commerce Content Associate at JG Superstore.",
+  text: "I'm Liam Flores, a Magna Cum Laude Information Technology graduate from TIP Manila. During my internship at Highly Succeed Inc., I worked on a DILG pre-registration system and supported UI/UX and documentation tasks. I now work as an E-commerce Content Associate at JG Superstore, and I'm interested in building useful web applications.",
 };
