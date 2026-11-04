@@ -16,7 +16,7 @@ export const hero = {
   roles: ["IT Specialist", "Web Developer", "Graphics Designer", "Freelance Designer"],
   subtitle: "Building clean, responsive websites and applications. I turn ideas into working products.",
   avatar: "/images/profilepic.png",
-  resume: "/FloresCV.pdf",
+  resume: "/LJFlores_Portfolio.pdf",
   meta: [
     { icon: FaLocationDot, label: "Pateros, Metro Manila" },
     { icon: FaBriefcase, label: "JG Superstore" },
