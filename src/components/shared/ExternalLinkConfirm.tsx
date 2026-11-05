@@ -1,24 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { FaArrowUpRightFromSquare } from "react-icons/fa6";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
 export function ExternalLinkConfirm() {
-  const [url, setUrl] = useState<string | null>(null);
+  const [destination, setDestination] = useState<{ url: string; label: string } | null>(null);
+  const trigger = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      const target = e.target as HTMLElement | null;
-      const link = target?.closest("a");
-      if (!link || link.dataset.extConfirmSkip) return;
-      if (link.target !== "_blank") return;
+    function handleClick(event: MouseEvent) {
+      const link = event.target instanceof Element ? event.target.closest("a") : null;
+      if (!link || link.dataset.extConfirmSkip || link.target !== "_blank") return;
 
-      const href = link.getAttribute("href") ?? "";
-      if (!href.startsWith("http")) return;
+      const url = new URL(link.href, window.location.href);
+      if (!["http:", "https:"].includes(url.protocol) || url.origin === window.location.origin) return;
 
-      e.preventDefault();
-      setUrl(href);
+      event.preventDefault();
+      trigger.current = link;
+      setDestination({ url: url.href, label: link.dataset.extConfirmLabel ?? "Open external link" });
     }
 
     document.addEventListener("click", handleClick, true);
@@ -26,32 +26,23 @@ export function ExternalLinkConfirm() {
   }, []);
 
   return (
-    <Dialog open={url !== null} onOpenChange={(open) => !open && setUrl(null)}>
-      <DialogContent className="text-center" showCloseButton={false}>
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-background">
-          <FaArrowUpRightFromSquare className="h-4 w-4 text-muted-foreground" />
-        </div>
-        <DialogTitle>Leaving Portfolio</DialogTitle>
-        {url && <p className="break-all rounded-md border border-border bg-background px-3 py-2 font-mono text-xs text-muted-foreground">{url}</p>}
-        <DialogDescription>You&apos;re about to open an external link. Continue?</DialogDescription>
-        <div className="mt-2 flex justify-center gap-3">
-          <button
-            onClick={() => setUrl(null)}
-            className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Cancel
-          </button>
-          {url && (
+    <Dialog open={destination !== null} onOpenChange={(open) => !open && setDestination(null)}>
+      <DialogContent className="text-center" showCloseButton={false} finalFocus={trigger}>
+        <DialogTitle>Leaving this portfolio</DialogTitle>
+        <DialogDescription>The destination opens in a new tab.</DialogDescription>
+        {destination && <p className="break-all rounded-md border border-border bg-background px-3 py-2 text-xs text-muted-foreground">{destination.url}</p>}
+        <div className="flex flex-wrap justify-center gap-2">
+          <DialogClose className="action-secondary">Cancel</DialogClose>
+          {destination && (
             <a
-              href={url}
+              href={destination.url}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               data-ext-confirm-skip="true"
-              onClick={() => setUrl(null)}
-              className="flex items-center gap-1.5 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background transition-opacity hover:opacity-85"
+              onClick={() => setDestination(null)}
+              className="action-primary"
             >
-              Open Link
-              <FaArrowUpRightFromSquare className="h-3 w-3" />
+              {destination.label} <ArrowUpRight aria-hidden="true" className="size-4" />
             </a>
           )}
         </div>

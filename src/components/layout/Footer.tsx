@@ -1,18 +1,20 @@
+import { FeedbackWidget } from "@/components/shared/FeedbackWidget";
+import { ShareButton } from "@/components/sections/ShareButton";
+import { hero } from "@/data/hero";
+
 export function Footer() {
   return (
-    <footer className="border-t border-border px-6 pt-10 pb-28 text-sm text-muted-foreground md:px-12">
-      <div className="mx-auto flex max-w-2xl flex-col items-center justify-between gap-4 md:flex-row">
-        <p>© 2026 Liam Flores. All rights reserved.</p>
-        <div className="flex gap-6">
-          <a href="https://github.com/liamflores-09" target="_blank" rel="noreferrer" className="hover:text-foreground">
-            GitHub
-          </a>
-          <a href="https://linkedin.com/in/liamjedmflores" target="_blank" rel="noreferrer" className="hover:text-foreground">
-            LinkedIn
-          </a>
-          <a href="mailto:liamjedmflores@gmail.com" className="hover:text-foreground">
-            Email
-          </a>
+    <footer className="border-t border-border px-5 py-8 text-sm text-muted-foreground sm:px-6">
+      <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
+        <p>© 2026 Liam Flores</p>
+        <div className="flex flex-wrap items-center gap-x-2">
+          {hero.socials.map((social) => (
+            <a key={social.href} href={social.href} target={social.href.startsWith("https:") ? "_blank" : undefined} rel="noreferrer" className="nav-link">
+              {social.label}
+            </a>
+          ))}
+          <ShareButton />
+          <FeedbackWidget />
         </div>
       </div>
     </footer>

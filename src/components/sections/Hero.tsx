@@ -1,70 +1,36 @@
 import Image from "next/image";
-import { FaArrowRight, FaArrowUpRightFromSquare, FaEnvelope } from "react-icons/fa6";
-import { FlickeringGrid } from "@/components/ui/flickering-grid";
-import { ResumeButton } from "@/components/sections/ResumeButton";
-import { ShareButton } from "@/components/sections/ShareButton";
-import { Stats } from "@/components/sections/Stats";
+import { ArrowRight, FileText } from "lucide-react";
 import { hero } from "@/data/hero";
 
 export function Hero() {
   return (
-    <section id="hero" className="relative flex min-h-[90vh] flex-col items-center justify-center overflow-hidden px-6 pt-32 pb-16">
-      <div className="absolute inset-x-0 top-0 h-64">
-        <FlickeringGrid
-          className="absolute inset-0"
-          squareSize={4}
-          gridGap={6}
-          color="#8b8b85"
-          maxOpacity={0.25}
-          flickerChance={0.15}
-        />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-background" />
-      </div>
-      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-6 text-center sm:flex-row sm:items-start sm:gap-8 sm:text-left">
-        <div className="relative aspect-[2/3] w-40 shrink-0 overflow-hidden rounded-2xl sm:w-48">
-          <Image
-            src={hero.avatar}
-            alt={hero.name}
-            fill
-            sizes="(min-width: 640px) 192px, 160px"
-            className="origin-top scale-125 object-cover object-top"
-            priority
-          />
-        </div>
-        <div className="flex flex-col items-center sm:items-start">
-          <h1 className="mb-3 text-5xl font-extrabold tracking-tight md:text-6xl">{hero.name} 👋</h1>
-          <p className="mb-6 max-w-md text-lg text-muted-foreground">{hero.subtitle}</p>
-          <div className="mb-6 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
-            <a href="#projects" className="inline-flex items-center gap-2 rounded-xl bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition-transform hover:-translate-y-0.5">
-              Explore my work <FaArrowRight className="h-3 w-3" />
+    <section id="hero" aria-labelledby="hero-title" className="relative isolate px-5 py-9 sm:px-6 sm:py-14 lg:py-20">
+      <div className="hero-pixels absolute inset-x-0 top-0 -z-10 h-44" aria-hidden="true" />
+      <div className="mx-auto grid max-w-3xl items-center gap-6 sm:grid-cols-[1fr_9rem] sm:gap-10 md:grid-cols-[1fr_12rem]">
+        <div>
+          <div className="mb-3 flex items-center gap-2.5 text-sm font-semibold text-muted-foreground">
+            <span className="relative size-11 shrink-0 overflow-hidden rounded-lg bg-surface sm:hidden">
+              <Image src={hero.avatar} alt="" fill sizes="44px" className="scale-125 object-cover object-top" />
+            </span>
+            <p>{hero.name} <span aria-hidden="true">·</span> {hero.meta[0].label}</p>
+          </div>
+          <h1 id="hero-title" className="max-w-xl text-4xl leading-[1.02] font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+            Web developer with a UI design background
+          </h1>
+          <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground sm:mt-5 sm:text-lg">{hero.subtitle}</p>
+          <div className="mt-5 flex flex-wrap gap-2 sm:mt-7">
+            <a href="#projects" className="action-primary">
+              View selected work <ArrowRight aria-hidden="true" className="size-4" />
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-foreground hover:text-background">
-              Contact me <FaEnvelope className="h-3 w-3" />
+            <a href={hero.resume} target="_blank" rel="noopener noreferrer" className="action-secondary">
+              <FileText aria-hidden="true" className="size-4" /> View résumé (PDF)
             </a>
           </div>
-          <div className="mb-6 flex flex-wrap items-center justify-center gap-2 text-sm text-muted sm:justify-start">
-            {hero.meta.map((item, index) => (
-              <span key={item.label} className="flex items-center gap-2">
-                {index > 0 && <span className="opacity-50">·</span>}
-                <item.icon className="h-3.5 w-3.5" />
-                {item.label}
-              </span>
-            ))}
-          </div>
-          <div className="mb-6 flex flex-wrap items-center justify-center gap-4 text-sm font-medium sm:justify-start">
-            {hero.socials.map((social) => (
-              <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel={social.href.startsWith("http") ? "noreferrer" : undefined} className="flex items-center gap-1.5 text-foreground lowercase transition-colors hover:text-accent">
-                {social.label}<FaArrowUpRightFromSquare className="h-3 w-3" />
-              </a>
-            ))}
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
-            <ResumeButton src={hero.resume} />
-            <ShareButton />
-          </div>
+        </div>
+        <div className="relative hidden aspect-[2/3] overflow-hidden rounded-2xl sm:block">
+          <Image src={hero.avatar} alt="Liam Flores" fill sizes="(min-width: 768px) 192px, 144px" className="origin-top scale-125 object-cover object-top" priority />
         </div>
       </div>
-      <Stats />
     </section>
   );
 }

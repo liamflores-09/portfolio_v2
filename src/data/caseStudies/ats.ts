@@ -8,12 +8,6 @@ export interface CaseStudyListItem {
   description: string;
 }
 
-export interface CaseStudyStat {
-  value: number;
-  suffix?: string;
-  label: string;
-}
-
 export interface CaseStudyFlowStep {
   title: string;
   description: string;
@@ -35,12 +29,8 @@ export interface CaseStudyScreenshot {
 }
 
 export const atsCaseStudy = {
-  badge: "Completed",
   brand: "RecruitMint",
   title: "Applicant Tracking System",
-  subtitle: "Capstone Project Portfolio Showcase",
-  notice:
-    "This project is currently not deployed online. This page serves as a portfolio showcase demonstrating the features, architecture, and development work behind the Applicant Tracking System capstone project.",
   overview: {
     description:
       "A comprehensive web-based platform designed to streamline and digitize the recruitment process for local companies. Built with Laravel following the MVC architecture and Prototyping methodology.",
@@ -90,11 +80,6 @@ export const atsCaseStudy = {
       done: true,
     },
   ] satisfies CaseStudyTimelineItem[],
-  timelineStats: [
-    { value: 6, suffix: "+", label: "Months Duration" },
-    { value: 100, suffix: "%", label: "Completed" },
-    { value: 4, label: "Team Members" },
-  ] satisfies CaseStudyStat[],
   objectives: [
     { title: "Streamline Application Process", description: "Digitize and automate the entire applicant registration and tracking workflow." },
     { title: "Real-time Status Tracking", description: "Provide applicants with instant updates on their application progress." },
@@ -116,7 +101,7 @@ export const atsCaseStudy = {
     { title: "Feedback Form", description: "User feedback collection and management." },
   ] satisfies CaseStudyListItem[],
   screenshots: [
-    { src: "/images/capstone/authentication.png", title: "Authentication Page", description: "Login and registration with role-based redirection.", tags: ["Login", "Registration"], side: "client" },
+    { src: "/images/capstone/Authentication.png", title: "Authentication Page", description: "Login and registration with role-based redirection.", tags: ["Login", "Registration"], side: "client" },
     { src: "/images/capstone/signup.png", title: "Sign Up Form", description: "New users can create accounts to access system features.", tags: ["Registration", "Account Creation"], side: "client" },
     { src: "/images/capstone/email-verification.png", title: "Email Verification", description: "Laravel's built-in verification system.", tags: ["Laravel Mail", "Verification"], side: "client" },
     { src: "/images/capstone/services1.png", title: "Services Page", description: "Services and product features with navigation to careers.", tags: ["Services", "CTA"], side: "client" },
@@ -137,12 +122,5 @@ export const atsCaseStudy = {
     { src: "/images/capstone/evaluation1.png", title: "Evaluation Form", description: "Manage evaluation tests and scoring.", tags: ["Tests", "Scoring"], side: "admin" },
     { src: "/images/capstone/analytics1.png", title: "Analytics Page", description: "Hiring statistics, charts, and reports.", tags: ["Charts", "Reports"], side: "admin" },
   ] satisfies CaseStudyScreenshot[],
-  highlights: [
-    { value: 6, suffix: "+", label: "Months Development" },
-    { value: 4, label: "Team Members" },
-    { value: 10, suffix: "+", label: "Technologies" },
-    { value: 10, suffix: "+", label: "Key Features" },
-    { value: 20, suffix: "+", label: "Screenshots" },
-  ] satisfies CaseStudyStat[],
   footer: "© 2024 Liam Flores — Applicant Tracking System Capstone Project",
 };

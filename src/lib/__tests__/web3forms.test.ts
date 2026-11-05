@@ -7,9 +7,14 @@ describe("submitToWeb3Forms", () => {
   });
 
   it("returns true when the request succeeds", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: true }) }));
     const result = await submitToWeb3Forms(new FormData());
     expect(result).toBe(true);
+  });
+
+  it("returns false when the provider rejects a successful HTTP response", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: false }) }));
+    expect(await submitToWeb3Forms(new FormData())).toBe(false);
   });
 
   it("returns false when the request fails", async () => {

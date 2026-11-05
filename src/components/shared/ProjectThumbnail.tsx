@@ -17,5 +17,5 @@ export function ProjectThumbnail({ project, sizes, compact }: { project: Project
     );
   }
 
-  return <Image src={project.image} alt={project.title} fill sizes={sizes} className="object-cover" />;
+  return <Image src={project.image} alt={compact ? "" : project.imageAlt ?? project.title} fill sizes={sizes} className="object-cover" />;
 }

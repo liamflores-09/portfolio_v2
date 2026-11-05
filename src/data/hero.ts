@@ -14,7 +14,7 @@ export interface HeroSocialLink {
 export const hero = {
   name: "Liam Flores",
   roles: ["IT Specialist", "Web Developer", "Graphics Designer", "Freelance Designer"],
-  subtitle: "Building clean, responsive websites and applications. I turn ideas into working products.",
+  subtitle: "I led development on RecruitMint, a Laravel applicant tracking system. I currently work in e-commerce content at JG Superstore.",
   avatar: "/images/profilepic.png",
   resume: "/LJFlores_Portfolio.pdf",
   meta: [

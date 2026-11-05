@@ -13,13 +13,14 @@ export const experience: ExperienceItem[] = [
     company: "JG Superstore",
     period: "Present",
     current: true,
+    description: "Create and maintain product listings and correct product information across Lazada, Shopee, Shopify and TikTok Shop.",
     logos: ["/images/companies/jg.png"],
   },
   {
-    role: "Web Developer",
+    role: "Web Development Team Lead · Intern",
     company: "Highly Succeed Inc",
     period: "2025",
-    description: "Built a pre-registration system for DILG and coordinated with teammates on implementation.",
+    description: "Built front-end components for the DILG pre-registration system and contributed to the PhilGEPS user manual.",
     logos: ["/images/companies/hsi.png"],
   },
   {
