@@ -1,9 +1,13 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { MessageCircleMore } from "lucide-react";
 import { FaPaperPlane, FaRegStar, FaSpinner, FaStar } from "react-icons/fa6";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DockIcon } from "@/components/ui/dock";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { FlickeringGrid } from "@/components/ui/flickering-grid";
+import { Confetti, type ConfettiRef } from "@/components/ui/confetti";
 import { submitToWeb3Forms } from "@/lib/web3forms";
 import { contact } from "@/data/contact";
 
@@ -12,26 +16,33 @@ type Status = "idle" | "sending" | "sent" | "error";
 const FIELD_CLASSES =
   "w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-sm outline-none transition-colors focus:border-accent";
 
-export function FeedbackWidget() {
+export function FeedbackWidget({
+  iconClassName,
+  variant = "dock",
+}: {
+  iconClassName: string;
+  variant?: "dock" | "plain";
+}) {
   const [status, setStatus] = useState<Status>("idle");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const confettiRef = useRef<ConfettiRef>(null);
   const nameId = useId();
   const emailId = useId();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+    const formData = new FormData(e.currentTarget);
     formData.append("access_key", contact.web3formsAccessKey);
     formData.append("subject", "New Portfolio Feedback");
     formData.append("rating", rating ? `${rating}/5` : "Not rated");
     const success = await submitToWeb3Forms(formData);
     setStatus(success ? "sent" : "error");
     if (success) {
-      form.reset();
+      e.currentTarget.reset();
       setRating(0);
+      confettiRef.current?.fire({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
     }
   }
 
@@ -41,11 +52,41 @@ export function FeedbackWidget() {
         if (!open) setStatus("idle");
       }}
     >
-      <DialogTrigger className="nav-link gap-1.5">
-        <MessageCircleMore aria-hidden="true" className="size-4" /> Site feedback
-      </DialogTrigger>
-      <DialogContent className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-y-auto p-0 sm:max-w-md">
-        <div className="px-6 pt-8 pb-5">
+      {variant === "dock" ? (
+        <DockIcon>
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <DialogTrigger aria-label="Send feedback" className="flex h-full w-full items-center justify-center text-foreground" />
+              }
+            >
+              <MessageCircleMore className={iconClassName} />
+            </TooltipTrigger>
+            <TooltipContent side="top">Feedback</TooltipContent>
+          </Tooltip>
+        </DockIcon>
+      ) : (
+        <DialogTrigger
+          aria-label="Send feedback"
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-foreground"
+        >
+          <MessageCircleMore className={iconClassName} />
+        </DialogTrigger>
+      )}
+      <DialogContent className="flex flex-col gap-0 overflow-hidden p-0 sm:max-w-md" showCloseButton>
+        <Confetti ref={confettiRef} manualstart className="pointer-events-none absolute inset-0 z-50 h-full w-full" />
+        <div className="relative overflow-hidden px-6 pb-5 pt-8">
+          <div className="absolute inset-x-0 top-0 h-24">
+            <FlickeringGrid
+              className="absolute inset-0"
+              squareSize={3}
+              gridGap={5}
+              color="#8b8b85"
+              maxOpacity={0.25}
+              flickerChance={0.15}
+            />
+            <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-b from-transparent to-popover" />
+          </div>
           <div className="relative z-10">
             <DialogTitle>Feedback</DialogTitle>
             <DialogDescription>Quick thoughts on the portfolio -- what worked, what didn&apos;t.</DialogDescription>
@@ -79,7 +120,6 @@ export function FeedbackWidget() {
                     aria-label={`Rate ${value} out of 5`}
                     onMouseEnter={() => setHoverRating(value)}
                     onClick={() => setRating(value)}
-                    aria-pressed={rating === value}
                     className="p-0.5 text-accent transition-transform hover:scale-110"
                   >
                     {filled ? <FaStar className="h-5 w-5" /> : <FaRegStar className="h-5 w-5" />}
@@ -89,9 +129,9 @@ export function FeedbackWidget() {
             </div>
           </div>
 
-          <textarea name="liked" aria-label="What did you like?" placeholder="What did you like?" rows={2} className={`resize-none ${FIELD_CLASSES}`} />
-          <textarea name="improve" aria-label="What could be improved?" placeholder="What could be improved?" rows={2} className={`resize-none ${FIELD_CLASSES}`} />
-          <textarea name="message" aria-label="Any other thoughts?" placeholder="Any other thoughts?" rows={2} className={`resize-none ${FIELD_CLASSES}`} />
+          <textarea name="liked" placeholder="What did you like?" rows={2} className={`resize-none ${FIELD_CLASSES}`} />
+          <textarea name="improve" placeholder="What could be improved?" rows={2} className={`resize-none ${FIELD_CLASSES}`} />
+          <textarea name="message" placeholder="Any other thoughts?" rows={2} className={`resize-none ${FIELD_CLASSES}`} />
 
           <button
             type="submit"

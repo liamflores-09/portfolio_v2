@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
+import { useScrollBlur } from "@/lib/useScrollBlur";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { BorderBeam } from "@/components/ui/border-beam";
 import { experience } from "@/data/experience";
 
 function getInitials(name: string): string {
@@ -16,14 +20,16 @@ function LogoBadge({ src }: { src: string }) {
 }
 
 export function Experience() {
+  const { ref, blur } = useScrollBlur<HTMLDivElement>();
+
   return (
-    <section id="experience" className="px-5 py-10 sm:px-6 sm:py-14">
-      <div>
-        <SectionHeading title="Experience" />
+    <section id="experience" className="px-6 py-24">
+      <div ref={ref} style={{ filter: `blur(${blur}px)` }}>
+        <SectionHeading number="02" title="experience" />
         <div className="mx-auto flex max-w-2xl flex-col gap-4">
           {experience.map((item) => (
             <div key={`${item.role}-${item.company}`} className="relative overflow-hidden rounded-2xl border border-border p-6">
-              <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <div className="mb-3 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   {item.logos && item.logos.length > 0 ? (
                     <div className="flex shrink-0 -space-x-2">
@@ -43,6 +49,7 @@ export function Experience() {
               </div>
               <h3 className="text-lg font-semibold">{item.role}</h3>
               {item.description && <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">{item.description}</p>}
+              {item.current && <BorderBeam duration={6} size={200} />}
             </div>
           ))}
         </div>

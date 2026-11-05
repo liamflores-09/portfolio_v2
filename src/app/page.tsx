@@ -11,14 +11,14 @@ import { Contact } from "@/components/sections/Contact";
 
 export default function Home() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <main className="overflow-x-hidden">
       <Hero />
-      <Projects />
+      <About />
       <Experience />
       <Testimonials />
-      <About />
       <TechStack />
       <Education />
+      <Projects />
       <CreativeWork />
       <Hobbies />
       <Contact />

@@ -11,7 +11,7 @@
   --color-foreground: #18181b;
   --color-surface: #ffffff;
   --color-border: #e6e4df;
-  --color-muted: #65655f;
+  --color-muted: #8b8b85;
   --color-muted-foreground: #52525b;
   --color-accent: #4338ca;
 }
@@ -21,7 +21,7 @@
   --color-foreground: #f4f4f5;
   --color-surface: #141414;
   --color-border: #262626;
-  --color-muted: #a1a1aa;
+  --color-muted: #6b7280;
   --color-muted-foreground: #a1a1aa;
   --color-accent: #818cf8;
 }
@@ -172,52 +172,4 @@ body {
 ::view-transition-old(root), ::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
-}
-html {
-  scroll-padding-top: 4.25rem;
-}
-
-@media (max-width: 350px) {
-  html { scroll-padding-top: 6.75rem; }
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-.skip-link {
-  @apply fixed top-2 left-2 z-[70] -translate-y-[150%] rounded-lg bg-foreground px-4 py-3 text-background focus:translate-y-0;
-}
-
-.nav-link {
-  @apply inline-flex min-h-11 min-w-11 items-center rounded-md px-1 hover:underline sm:px-2;
-}
-
-.action-primary,
-.action-secondary {
-  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold sm:px-4;
-}
-
-.action-primary {
-  @apply border-transparent bg-foreground text-background hover:opacity-85;
-}
-
-.action-secondary {
-  @apply border-muted bg-surface text-foreground hover:bg-background;
-}
-
-.hero-pixels {
-  background-image: radial-gradient(var(--color-muted) 0.85px, transparent 0.85px);
-  background-size: 9px 9px;
-  mask-image: linear-gradient(to bottom, #000, transparent);
-  opacity: 0.18;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
 }

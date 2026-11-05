@@ -31,8 +31,13 @@ export interface TimelineItem {
 }
 
 export const budgetTrackerCaseStudy = {
+  badge: "Completed",
   brand: "MIK! — Mag Ipon Ka!",
   title: "Personal Budget Tracker",
+  subtitle: "Case Study — A brutalist finance dashboard built with Laravel, Vue 3, and Kinetic Typography",
+  notice:
+    "This case study covers the design philosophy, technical architecture, and feature breakdown of the Personal Budget Tracker — a project built in a single session with Xiaomi MiMo Code assistance.",
+  githubUrl: "https://github.com/liamflores-09/personal_budget_tracker",
   overview: {
     description:
       "A brutalist finance dashboard built with Laravel, Vue 3, and Kinetic Typography. Instead of following the sea of dark-mode SaaS dashboards, this project uses typography as the interface — massive scale, constant motion, hard color inversions, and brutalist geometry.",
@@ -42,6 +47,7 @@ export const budgetTrackerCaseStudy = {
       { label: "Timeline", value: "Single Session (Design + Implementation)" },
       { label: "Type", value: "Web Application — Case Study" },
       { label: "AI Assistance", value: "Xiaomi MiMo Code" },
+      { label: "Status", value: "Live on GitHub" },
     ] satisfies CaseStudyMeta[],
   },
   problem: [
@@ -157,5 +163,11 @@ export const budgetTrackerCaseStudy = {
     keyTakeaway:
       "The most important design decision wasn't a color or a font — it was choosing to be bold. Generic designs are forgettable. A strong design system, applied consistently, creates something people remember and want to use.",
   },
+  links: [
+    { title: "GitHub", description: "liamflores-09/personal_budget_tracker", href: "https://github.com/liamflores-09/personal_budget_tracker" },
+    { title: "Tech Stack", description: "Laravel · Vue 3 · Inertia.js · Tailwind CSS" },
+    { title: "Design System", description: "Kinetic Typography" },
+  ],
+  closingLine: "Built with intention. Designed to be remembered.",
   footer: "© 2026 Liam Flores — Personal Budget Tracker Case Study",
 };

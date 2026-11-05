@@ -5,6 +5,7 @@ import { SiteDock } from "@/components/layout/SiteDock";
 import { Footer } from "@/components/layout/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ExternalLinkConfirm } from "@/components/shared/ExternalLinkConfirm";
+import { BackToTop } from "@/components/shared/BackToTop";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -49,11 +50,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-background text-foreground font-sans antialiased">
         <ThemeProvider>
           <TooltipProvider>
-            <a href="#main-content" className="skip-link">Skip to content</a>
-            <SiteDock />
             {children}
             <Footer />
+            <SiteDock />
             <ExternalLinkConfirm />
+            <BackToTop />
           </TooltipProvider>
         </ThemeProvider>
       </body>

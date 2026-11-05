@@ -1,54 +1,54 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import { useScrollBlur } from "@/lib/useScrollBlur";
+import { MagicCard } from "@/components/ui/magic-card";
+import { Lens } from "@/components/ui/lens";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Lightbox } from "@/components/shared/Lightbox";
 import { creativeWork } from "@/data/creativeWork";
 
-const categories = ["Digital Art", "OJT Graphics"] as const;
+const TABS = ["Digital Art", "OJT Graphics"] as const;
 
 export function CreativeWork() {
-  const [category, setCategory] = useState<(typeof categories)[number]>("Digital Art");
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("Digital Art");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const trigger = useRef<HTMLButtonElement | null>(null);
-  const items = creativeWork.filter((item) => item.category === category);
-  const lightboxImages = items.map(({ src, title, description }) => ({ src, alt: description ?? title, title }));
+  const { ref, blur } = useScrollBlur<HTMLDivElement>();
+
+  const items = useMemo(() => creativeWork.filter((item) => item.category === activeTab), [activeTab]);
+  const lightboxImages = useMemo(() => items.map((item) => ({ src: item.src, alt: item.category })), [items]);
 
   return (
-    <section id="creative" className="px-5 py-10 sm:px-6 sm:py-14">
-      <SectionHeading title="Creative work" />
-      <div className="mx-auto max-w-3xl">
-        <div aria-label="Artwork category" role="group" className="mb-5 flex flex-wrap gap-2">
-          {categories.map((option) => (
-            <button key={option} type="button" onClick={() => setCategory(option)} aria-pressed={category === option} className={category === option ? "action-primary" : "action-secondary"}>
-              {option}
+    <section id="creative" className="px-6 py-24">
+      <div ref={ref} style={{ filter: `blur(${blur}px)` }}>
+        <SectionHeading number="07" title="creative work" />
+        <div className="mx-auto mb-8 flex max-w-5xl justify-center gap-2">
+          {TABS.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`rounded-full border px-5 py-2 text-sm font-semibold transition-colors ${
+                activeTab === tab ? "border-foreground bg-foreground text-background" : "border-border text-muted hover:text-foreground"
+              }`}
+            >
+              {tab}
             </button>
           ))}
         </div>
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+        <div className="mx-auto columns-2 max-w-5xl gap-3 sm:columns-3 md:columns-4">
           {items.map((item, index) => (
-            <li key={item.src} className="min-w-0 rounded-xl border border-border bg-surface">
-              <button
-                type="button"
-                aria-label={`View ${item.title}`}
-                onClick={(event) => {
-                  trigger.current = event.currentTarget;
-                  setOpenIndex(index);
-                }}
-                className="flex h-full w-full flex-col rounded-xl text-left"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element -- artworks use variable source dimensions */}
-                <img src={item.src} alt={item.description ?? item.title} loading="lazy" className="aspect-square w-full rounded-t-xl bg-background object-contain" />
-                <div className="p-3">
-                  <p className="text-sm font-semibold">{item.title}</p>
-                  {item.description && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.description}</p>}
-                </div>
+            <MagicCard key={item.src} className="mb-3 block break-inside-avoid cursor-pointer overflow-hidden rounded-xl" gradientColor="#4338ca1a">
+              <button className="block w-full" onClick={() => setOpenIndex(index)}>
+                <Lens zoomFactor={1.6} lensSize={120} ariaLabel={`Zoom into ${item.category} artwork`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- masonry needs each image's real aspect ratio, not a fixed square crop */}
+                  <img src={item.src} alt={item.category} loading="lazy" className="block h-auto w-full" />
+                </Lens>
               </button>
-            </li>
+            </MagicCard>
           ))}
-        </ul>
+        </div>
       </div>
-      <Lightbox images={lightboxImages} openIndex={openIndex} onClose={() => setOpenIndex(null)} onIndexChange={setOpenIndex} trigger={trigger} />
+      <Lightbox images={lightboxImages} openIndex={openIndex} onClose={() => setOpenIndex(null)} onIndexChange={setOpenIndex} />
     </section>
   );
 }

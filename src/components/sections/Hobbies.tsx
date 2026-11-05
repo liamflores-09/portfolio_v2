@@ -1,12 +1,17 @@
+"use client";
+
+import { useScrollBlur } from "@/lib/useScrollBlur";
 import { MagicCard } from "@/components/ui/magic-card";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { hobbies } from "@/data/hobbies";
 
 export function Hobbies() {
+  const { ref, blur } = useScrollBlur<HTMLDivElement>();
+
   return (
-    <section id="hobbies" className="px-5 py-10 sm:px-6 sm:py-14">
-      <div>
-        <SectionHeading title="Hobbies" />
+    <section id="hobbies" className="px-6 py-24">
+      <div ref={ref} style={{ filter: `blur(${blur}px)` }}>
+        <SectionHeading number="08" title="hobbies" />
         <div className="mx-auto grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
           {hobbies.map((hobby) => (
             <MagicCard key={hobby.title} className="rounded-2xl border border-border" gradientColor="#4338ca1a">

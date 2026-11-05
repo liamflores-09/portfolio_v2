@@ -1,18 +1,15 @@
 "use client";
 
-import { useEffect, useSyncExternalStore, useState } from "react";
+import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import { SITE_URL } from "@/lib/site";
 import { FaCheck, FaCopy, FaShareNodes } from "react-icons/fa6";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-const subscribe = () => () => {};
-const canNativeShare = () => typeof navigator.share === "function";
-
 export function ShareButton() {
   const [qr, setQr] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const canShare = useSyncExternalStore(subscribe, canNativeShare, () => false);
+  const [canShare] = useState(() => typeof navigator !== "undefined" && typeof navigator.share === "function");
 
   useEffect(() => {
     QRCode.toDataURL(SITE_URL, { width: 240, margin: 1, color: { dark: "#18181b", light: "#ffffff" } })
@@ -36,7 +33,7 @@ export function ShareButton() {
 
   return (
     <Dialog>
-      <DialogTrigger className="nav-link gap-1.5">
+      <DialogTrigger className="flex items-center gap-1.5 rounded-lg border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground hover:text-background">
         <FaShareNodes className="h-3 w-3" /> Share
       </DialogTrigger>
       <DialogContent className="flex flex-col items-center gap-4 text-center sm:max-w-xs">

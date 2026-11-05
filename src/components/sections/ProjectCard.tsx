@@ -1,38 +1,64 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { FaArrowUpRightFromSquare, FaTriangleExclamation } from "react-icons/fa6";
+import { MagicCard } from "@/components/ui/magic-card";
 import { ProjectThumbnail } from "@/components/shared/ProjectThumbnail";
 import type { Project } from "@/data/projects";
 
-export function ProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {
-  const links = featured ? project.links.slice(0, 1) : project.links;
-
+export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background">
-      {project.image && (
-        <div className="relative aspect-[16/9] w-full border-b border-border bg-surface">
-          <ProjectThumbnail project={project} sizes="(min-width: 768px) 370px, (min-width: 640px) 50vw, 100vw" />
-        </div>
-      )}
-      <div className="flex flex-1 flex-col gap-2 px-5 pt-5 pb-3">
-        <p className="text-xs font-semibold tracking-widest text-muted uppercase">{project.status ?? project.category}</p>
-        <h3 className="text-xl leading-tight font-bold tracking-tight">{project.title}</h3>
-        <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-        {links.length > 0 && (
-          <div className="flex flex-wrap gap-x-4">
-            {links.map((link) =>
-              link.external ? (
-                <a key={link.href} href={link.href} target="_blank" rel="noreferrer" data-ext-confirm-label={link.confirmationLabel} className="nav-link gap-1 px-0 text-sm font-semibold text-accent sm:px-0">
-                  {link.label} <ArrowUpRight aria-hidden="true" className="size-4" />
-                </a>
-              ) : (
-                <Link key={link.href} href={link.href} className="nav-link gap-1 px-0 text-sm font-semibold text-accent sm:px-0">
-                  {link.label} <ArrowRight aria-hidden="true" className="size-4" />
-                </Link>
-              ),
-            )}
-          </div>
+    <MagicCard className="flex h-full flex-col overflow-hidden rounded-2xl border border-border" gradientColor="#4338ca1a">
+      <div className="relative h-52 w-full bg-border">
+        <ProjectThumbnail project={project} sizes="(min-width: 768px) 50vw, 100vw" />
+        {project.status && (
+          <span className="absolute right-3 top-3 rounded-full bg-amber-500/90 px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
+            {project.status}
+          </span>
         )}
       </div>
-    </article>
+      <div className="flex flex-1 flex-col gap-2 p-7">
+        <span className="text-xs font-semibold tracking-widest text-muted uppercase">{project.category}</span>
+        <h3 className="text-lg font-bold">{project.title}</h3>
+        <p className="flex-1 text-sm text-muted-foreground">{project.description}</p>
+        {project.tags && (
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span key={tag} className="rounded-full border border-border px-2.5 py-0.5 text-xs text-muted">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+        {project.notice && (
+          <p className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
+            <FaTriangleExclamation className="h-3 w-3" />
+            {project.notice}
+          </p>
+        )}
+        <div className="mt-1 flex flex-wrap gap-2">
+          {project.links.map((link) =>
+            link.external ? (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 rounded-lg border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground hover:text-background"
+              >
+                <FaArrowUpRightFromSquare className="h-3 w-3" />
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="flex items-center gap-1.5 rounded-lg border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground hover:text-background"
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
+        </div>
+      </div>
+    </MagicCard>
   );
 }

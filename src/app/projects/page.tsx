@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { ProjectCard } from "@/components/sections/ProjectCard";
+import { FaArrowLeft } from "react-icons/fa6";
 import { projects } from "@/data/projects";
+import { ProjectCard } from "@/components/sections/ProjectCard";
+import { FlickeringGrid } from "@/components/ui/flickering-grid";
 
 export const metadata = {
   title: "Projects | Liam Flores",
@@ -9,25 +10,34 @@ export const metadata = {
 };
 
 export default function ProjectsPage() {
-  const completed = projects.filter((project) => !project.status);
-  const inProgress = projects.filter((project) => project.status);
-
   return (
-    <main id="main-content" tabIndex={-1} className="mx-auto max-w-4xl px-5 py-10 sm:px-6 sm:py-14">
-      <Link href="/#projects" className="nav-link gap-2 px-0 text-sm font-semibold text-accent sm:px-0">
-        <ArrowLeft aria-hidden="true" className="size-4" /> Selected work
+    <main className="relative overflow-hidden px-6 pt-32 pb-24 md:px-12">
+      <div className="absolute inset-x-0 top-0 h-64">
+        <FlickeringGrid
+          className="absolute inset-0"
+          squareSize={4}
+          gridGap={6}
+          color="#8b8b85"
+          maxOpacity={0.25}
+          flickerChance={0.15}
+        />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-background" />
+      </div>
+      <Link
+        href="/"
+        className="absolute left-6 top-6 z-10 flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2 text-sm text-muted md:left-12 md:top-8"
+      >
+        <FaArrowLeft className="h-3 w-3" />
+        Back to Portfolio
       </Link>
-      <h1 className="mt-3 text-4xl font-extrabold tracking-tight md:text-5xl">Projects</h1>
-      <section aria-labelledby="completed" className="mt-9">
-        <h2 id="completed" className="mb-4 text-xl font-bold">Completed work</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {completed.map((project) => <ProjectCard key={project.title} project={project} />)}
+      <div className="relative z-10 mx-auto max-w-2xl">
+        <h1 className="mb-14 text-3xl font-extrabold tracking-tight md:text-4xl">projects</h1>
+        <div className="flex flex-col gap-6">
+          {projects.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
         </div>
-      </section>
-      <section aria-labelledby="in-progress" className="mt-9">
-        <h2 id="in-progress" className="mb-4 text-xl font-bold">In progress</h2>
-        {inProgress.map((project) => <ProjectCard key={project.title} project={project} />)}
-      </section>
+      </div>
     </main>
   );
 }
